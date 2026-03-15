@@ -39,12 +39,13 @@ VERCEL_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    VERCEL_URL,
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_HTTPONLY = True
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', VERCEL_URL]
 CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_HTTPONLY = False  # False so frontend JS can read the CSRF token
 

@@ -1,25 +1,23 @@
 # AI Fullstack Quiz App
 
-A fullstack application that generates dynamic, AI-powered multiple-choice quizzes on any topic using Google's Gemini LLM. Users can create accounts, generate quizzes, take them interactively, and track their historical performance.
+A modern, high-performance fullstack application that generates dynamic, AI-powered quizzes on any topic using the **Groq AI** (Llama 3.3 70B). Users can create accounts, generate quizzes, take them interactively, and track their historical performance.
 
 ## Tech Stack
-- **Frontend**: Next.js (App Router, JavaScript), Tailwind CSS
-- **Backend**: Django REST Framework
-- **Database**: PostgreSQL (via psycopg2)
-- **AI**: Google Gemini API (gemini-1.5-flash)
+- **Frontend**: Next.js 15 (App Router, JavaScript), Tailwind CSS
+- **Backend**: Django REST Framework (DRF)
+- **Database**: PostgreSQL (via **Neon** or **Supabase**)
+- **AI**: **Groq API** (llama-3.3-70b-versatile) - Ultra-fast inference
 
-## Architectural Decisions
-- **Django Sessions over JWT**: Django's built-in session authentication is robust, secure by default against XSS, and significantly simplifies credential management compared to implementing manual JWT token refresh cycles.
-- **Google Gemini API**: Gemini (specifically the 1.5-flash model) offers an incredibly generous free tier while being highly capable of consistently following strict zero-shot JSON output instructions for quiz generation.
-- **Folder Structure**: Separating the repository into explicit `/frontend` and `/backend` directories cleanly decouples the architectures, allowing independent scalable deployments (e.g. Vercel for the Next.js frontend and Render for the Django backend).
+## Recent Architectural Improvements
+- **Token-Based Authentication**: Transitioned from Sessions to DRF Tokens to ensure reliable cross-origin authentication between the Next.js frontend and Django backend, resolving common CSRF and session persistence issues in local and distributed environments.
+- **Groq AI Integration**: Switched to Groq for significantly faster question generation times (sub-second inference) compared to traditional providers.
+- **Next.js 15 Compatibility**: Updated dynamic routing to support the new asynchronous `params` API in Next.js 15.
+- **Cloud-Ready Configuration**: Pre-configured for seamless deployment to **Render** (Backend) and **Vercel** (Frontend) with dynamic CORS and database URL handling.
 
 ## Local Setup Instructions
 
 ### 1. Database Setup
-Ensure you have PostgreSQL installed locally. Create a database for the project:
-```sql
-CREATE DATABASE quizapp_db;
-```
+The app is configured to use **Neon PostgreSQL**. Ensure you have your `DATABASE_URL` ready.
 
 ### 2. Backend Setup
 Navigate to the backend directory and set up the Python environment:
@@ -37,12 +35,8 @@ pip install -r requirements.txt
 
 Create a `.env` file in the `/backend` directory:
 ```env
-DB_NAME=quizapp_db
-DB_USER=postgres
-DB_PASSWORD=your_db_password
-DB_HOST=localhost
-DB_PORT=5432
-GEMINI_API_KEY=your_gemini_api_key_here
+DATABASE_URL=your_neon_or_postgres_url
+GROQ_API_KEY=your_groq_api_key_here
 SECRET_KEY=your_django_secret_key
 DEBUG=True
 FRONTEND_URL=http://localhost:3000
@@ -63,7 +57,6 @@ npm install
 
 Create a `.env.local` file in the `/frontend` directory:
 ```env
-# Point this to your backend URL (defaults to localhost:8000 in development if not set)
 NEXT_PUBLIC_API_URL=http://localhost:8000/api
 ```
 
@@ -77,11 +70,11 @@ The application will be available at `http://localhost:3000`.
 ## Production Deployment Environment Variables
 
 **Backend (e.g., Render)**
-- `DATABASE_URL` (Provided by Render PostgreSQL)
+- `DATABASE_URL` (Your Neon/Supabase URL)
 - `SECRET_KEY` (A secure random string)
 - `DEBUG` (Set to `False`)
-- `FRONTEND_URL` (The deployed URL of your Next.js app, e.g. `https://my-quiz-app.vercel.app`)
-- `GEMINI_API_KEY` (Your Google Gemini API key)
+- `FRONTEND_URL` (Your Vercel App URL)
+- `GROQ_API_KEY` (Your Groq API key)
 
 **Frontend (e.g., Vercel)**
-- `NEXT_PUBLIC_API_URL` (The deployed URL of your Django backend API, e.g. `https://my-quiz-backend.onrender.com/api`)
+- `NEXT_PUBLIC_API_URL` (Your backend API URL, e.g. `https://my-backend.onrender.com/api`)

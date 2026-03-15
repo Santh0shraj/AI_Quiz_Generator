@@ -1,0 +1,58 @@
+# dependencies
+**/node_modules
+**/.pnp
+**/*.pnp.*
+frontend/.yarn/*
+!frontend/.yarn/patches
+!frontend/.yarn/plugins
+!frontend/.yarn/releases
+!frontend/.yarn/versions
+
+# next.js
+frontend/.next/
+frontend/out/
+
+# production
+**/build
+**/dist
+
+# misc
+.DS_Store
+*.pem
+*.log
+*.sqlite3
+server.log
+server_err.log
+
+# env files
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+
+# python
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/venv/
+**/.venv/
+**/env/
+**/bin/
+**/Include/
+**/Lib/
+**/Scripts/
+**/share/
+
+# backend specific
+backend/server.log
+backend/server_err.log
+backend/tmp_test_groq.py
+
+# artifacts
+.gemini/
+brain/
+.agents/
+.agent/
+_agents/
+_agent/

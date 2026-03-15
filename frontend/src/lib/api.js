@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+const API_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api').replace(/\/api$/, '');
 
 // Helper to make API calls with credentials
 export async function fetchApi(endpoint, options = {}) {
@@ -38,26 +38,26 @@ export async function fetchApi(endpoint, options = {}) {
 
 // Auth API
 export const apiRegister = (username, email, password) => 
-  fetchApi('/register/', { method: 'POST', body: JSON.stringify({ username, email, password }) });
+  fetchApi('/api/register/', { method: 'POST', body: JSON.stringify({ username, email, password }) });
 
 export const apiLogin = (username, password) => 
-  fetchApi('/login/', { method: 'POST', body: JSON.stringify({ username, password }) });
+  fetchApi('/api/login/', { method: 'POST', body: JSON.stringify({ username, password }) });
 
 export const apiLogout = () => 
-  fetchApi('/logout/', { method: 'POST' });
+  fetchApi('/api/logout/', { method: 'POST' });
 
 export const apiGetMe = () => 
-  fetchApi('/me/', { method: 'GET' });
+  fetchApi('/api/me/', { method: 'GET' });
 
 // Quiz API
 export const apiCreateQuiz = (topic, difficulty, num_questions) => 
-  fetchApi('/quiz/create/', { method: 'POST', body: JSON.stringify({ topic, difficulty, num_questions }) });
+  fetchApi('/api/quiz/create/', { method: 'POST', body: JSON.stringify({ topic, difficulty, num_questions }) });
 
 export const apiGetQuiz = (quizId) => 
-  fetchApi(`/quiz/${quizId}/`, { method: 'GET' });
+  fetchApi(`/api/quiz/${quizId}/`, { method: 'GET' });
 
 export const apiSubmitQuiz = (quizId, answers) => 
-  fetchApi(`/quiz/${quizId}/submit/`, { method: 'POST', body: JSON.stringify({ answers }) });
+  fetchApi(`/api/quiz/${quizId}/submit/`, { method: 'POST', body: JSON.stringify({ answers }) });
 
 export const apiGetHistory = () => 
-  fetchApi('/quiz/history/', { method: 'GET' });
+  fetchApi('/api/quiz/history/', { method: 'GET' });

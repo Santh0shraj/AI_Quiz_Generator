@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import { apiCreateQuiz } from "@/lib/api";
 import Link from "next/link";
 
-export default function CreateQuiz() {
+function CreateQuizContent() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -146,5 +146,13 @@ export default function CreateQuiz() {
         </div>
       </form>
     </div>
+  );
+}
+
+export default function CreateQuizPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-black text-white flex items-center justify-center">Loading...</div>}>
+      <CreateQuizContent />
+    </Suspense>
   );
 }
